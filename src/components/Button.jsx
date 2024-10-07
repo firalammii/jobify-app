@@ -2,7 +2,7 @@ import React from 'react';
 
 const Button = (props) => {
 
-    const { label, onClickFunction, bgColor, textColor, type } = props;
+    const { label, onClickFunction, bgColor, textColor, type, style } = props;
 
     const button = {
         minWidth: "150px",
@@ -10,13 +10,12 @@ const Button = (props) => {
         height: "80%",
         borderRadius: "3px",
         border: "none",
-        backgroundColor: bgColor,
-        color: textColor,
+        ...style
     };
 
     return (
         <button
-            type={type}
+            type={type || "button"}
             style={button}
             onClick={onClickFunction}
         >

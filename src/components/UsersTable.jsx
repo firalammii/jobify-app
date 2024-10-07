@@ -54,11 +54,14 @@ const UsersTable = (props) => {
 								style={{ gridTemplateColumns: `repeat(${tableHeads.length}, auto)` }}
 								onClick={() => onClick(body)}
 							>
-								<div className='cell' style={{ ...tableHeads[0].styles, justifyContent: "flex-start" }}>
+								{/* <div>
+									<FloatingButtons />
+								</div> */}
+								<span className='cell' style={{ ...tableHeads[0].styles, justifyContent: "flex-start" }}>
 									{numbering + index}
 									1
-								</div>
-								<div className='cell' style={{ ...tableHeads[1].styles }}>
+								</span>
+								<span className='cell' style={{ ...tableHeads[1].styles }}>
 									{
 										body?.avatar ?
 											<img
@@ -68,20 +71,20 @@ const UsersTable = (props) => {
 											/>
 											: <AccountCircleRounded fontSize='medium' color='primary' />
 									}
-								</div>
+								</span>
 
-								<div className='cell' style={{ ...tableHeads[2].styles }}>
+								<span className='cell' style={{ ...tableHeads[2].styles }}>
 									{`${body?.firstName} ${body?.lastName}`}
-								</div>
+								</span>
 
-								<div className='cell' style={{ ...tableHeads[3].styles, }}>
+								<span className='cell' style={{ ...tableHeads[3].styles, }}>
 									{body?.email}
-								</div>
+								</span>
 
-								<div className='cell' style={{ ...tableHeads[4].styles }}>
+								<span className='cell' style={{ ...tableHeads[4].styles }}>
 
 									{body?.roles?.map((role, i) => <span key={role}>{(i + 1 < body.roles.length) ? role + ", " : role}</span>)}
-								</div>
+								</span>
 
 							</div>))}
 					</div>

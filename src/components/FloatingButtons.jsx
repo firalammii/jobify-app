@@ -1,6 +1,6 @@
 import React from 'react';
 import { Edit, DeleteForever, Details } from '@mui/icons-material';
-// import '../css/floating-buttons.scss';
+import '../css/floating-buttons.scss';
 function FloatingButtons ({ editHandler, deleteHandler }) {
 	return (
 		<div className='icon-btns'>

@@ -7,6 +7,14 @@ export const usersTableHeads = [
     { id: 5, label: "role", styles: { width: "150px", justifyContent: "flex-start", } },
 
 ];
+export const tableHeads = [
+    { id: 1, label: "No :", },
+    { id: 2, label: "Avatar", },
+    { id: 3, label: "Full Name", },
+    { id: 4, label: "Email", },
+    { id: 5, label: "Roles", }
+];
+
 export const customersTableHeads = [
     [
         { id: 1, label: "No :", styles: { width: "100px" } },

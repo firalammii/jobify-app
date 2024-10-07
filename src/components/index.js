@@ -9,4 +9,6 @@ export { default as ListingItem } from './ListingItem';
 export { default as OAuth } from './OAuth';
 export { default as PrivateRoute } from './PrivateRoute';
 export { default as RequireAuth } from './RequireAuth';
+export { default as Table } from './Table';
 export { default as UsersTable } from './UsersTable';
+export { default as User } from './User';
