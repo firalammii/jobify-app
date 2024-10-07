@@ -74,8 +74,8 @@ export default function Profile() {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: 'POST',
+      const res = await fetch(`/api/users/${currentUser._id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },

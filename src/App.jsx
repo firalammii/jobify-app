@@ -1,23 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import About from './pages/About';
-import Profile from './pages/Profile';
-import Header from './components/Header';
-import PrivateRoute from './components/PrivateRoute';
-import CreateListing from './pages/CreateListing';
-import UpdateListing from './pages/UpdateListing';
-import Listing from './pages/Listing';
-import Search from './pages/Search';
+
+import { About, Home, Profile, SignIn, SignUp, CreateListing, UpdateListing, Listing, Search, Companies, AddCompany, Jobs, AddJob, Users } from './pages';
+import { PrivateRoute, Contact, RequireAuth, AppHeader } from './components';
+import { ROLES } from './data/roles';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Header />
+      <AppHeader />
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/sign-in' element={<SignIn />} />
+        <Route path='/contact' element={<Contact />} />
         <Route path='/sign-up' element={<SignUp />} />
         <Route path='/about' element={<About />} />
         <Route path='/search' element={<Search />} />
@@ -30,6 +24,20 @@ export default function App() {
             path='/update-listing/:listingId'
             element={<UpdateListing />}
           />
+        </Route>
+
+
+        <Route element={<RequireAuth allowedRoles={[ROLES.admin]} />}>
+          <Route path='/companies' element={<Companies />} />
+          <Route path='/add-company' element={<AddCompany />} />
+
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/add-job" element={<AddJob />} />
+
+        </Route>
+        <Route element={<RequireAuth allowedRoles={[ROLES.super]} />}>
+          <Route path="/users" element={<Users />} />
+          {/* <Route path="/add-user" element={<Register />} /> */}
         </Route>
       </Routes>
     </BrowserRouter>

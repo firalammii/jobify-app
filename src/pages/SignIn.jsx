@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   signInStart,
@@ -7,11 +7,18 @@ import {
   signInFailure,
 } from '../redux/user/userSlice';
 import OAuth from '../components/OAuth';
+import useAuth from '../hooks/useAuth';
+import { sessionStorageKey } from '../data/roles';
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
+
+  const { setAuth } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/sign-in";
+
   const dispatch = useDispatch();
   const handleChange = (e) => {
     setFormData({
@@ -19,6 +26,7 @@ export default function SignIn() {
       [e.target.id]: e.target.value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -37,17 +45,20 @@ export default function SignIn() {
         return;
       }
       dispatch(signInSuccess(data));
-      navigate('/');
+      setAuth({ ...data });
+      sessionStorage.setItem(sessionStorageKey, JSON.stringify({ ...data }));
+      navigate(from, { replace: true });
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
   };
   return (
-    <div className='p-3 max-w-lg mx-auto'>
+    <div className='p-3 max-w-lg mx-auto mt-20'>
       <h1 className='text-3xl text-center font-semibold my-7'>Sign In</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
-          type='email'
+          // type='email'
+          type='text'
           placeholder='email'
           className='border p-3 rounded-lg'
           id='email'
