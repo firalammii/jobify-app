@@ -1,8 +1,32 @@
 // ****************** jobs *******************
-export const jobCategories = ["Officials and Managers", "Professionals", "Technicians and Associate Professionals", "Clerical Support Workers", "Service and Sales Workers", "Skilled Agricultural, Forestry and Fishery Workers", "Craft and Related Trades Workers", "Plant and Machine Operators, and Assemblers", "Elementary Occupations",
+// export const jobCategories = ["Officials and Managers", "Professionals", "Technicians and Associates", "Clerical Support Workers", "Service and Sales Workers", "Skilled Agricultural Workers", "Craft and Related Trades Workers", "Plant and Machine Operators", "Elementary Occupations",
+// ];
+export const jobCategories = [{ label: "None ", value: "" },
+{ label: "Officials and Managers", value: "Officials and Managers" },
+{ label: "Professionals", value: "Professionals" },
+{ label: "Technicians and Associates", value: "Technicians and Associates" },
+{ label: "Clerical Support Workers", value: "Clerical Support Workers" },
+{ label: "Service and Sales Workers", value: "Service and Sales Workers" },
+{ label: "Skilled Agricultural Workers", value: "Skilled Agricultural Workers" },
+{ label: "Craft and Related Trades Workers", value: "Craft and Related Trades Workers" },
+{ label: "Plant and Machine Operators", value: "Plant and Machine Operators" },
+{ label: "Elementary Occupations", value: "Elementary Occupations" },
 ];
-export const jobTypes = ['Full-time', 'Part-time', 'Contract', 'Temporary', 'Internship', 'Freelance'];
-export const remoteOptions = ['On-site', 'Remote', 'Hybrid'];
+export const jobTypes = [
+	{ label: "None ", value: "" },
+	{ label: "Full-time ", value: "Full-time" },
+	{ label: "Part-time ", value: "Part-time" },
+	{ label: "Contract ", value: "Contract" },
+	{ label: "Temporary ", value: "Temporary" },
+	{ label: "Internship ", value: "Internship" },
+	{ label: "Freelance ", value: "Freelance" },
+];
+export const remoteOptions = [
+	{ label: "None ", value: "" },
+	{ label: "On-site ", value: "On-site " },
+	{ label: "Remote ", value: "Remote" },
+	{ label: "Hybrid ", value: "Hybrid" },
+];
 export const currencies = ["USD", "CAD", "EUR", "GBP", "GIP", "AUD", "OMR", "BHD", "KWD", "INR", "ETB"];
 
 // ****************** company *******************

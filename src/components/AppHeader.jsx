@@ -23,7 +23,7 @@ export default function AppHeader () {
     }
   }, [location.search]);
   return (
-    <header className='bg-slate-200 shadow-md sticky top-0 ...'>
+    <header className='bg-slate-200 shadow-md sticky top-0'>
       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
         <Link to='/'>
           <h1 className='font-bold text-sm sm:text-xl flex flex-wrap text-transform: capitalize'>
@@ -65,15 +65,24 @@ export default function AppHeader () {
           </button>
         </form>
         <ul className='flex gap-4 align-middle'>
-
+          <Link to='/jobs'>
+            <li className='hidden sm:inline text-slate-700 hover:underline text-transform: capitalize'>
+              Job Posts
+            </li>
+          </Link>
           <Link to='/add-job'>
             <li className='hidden sm:inline text-slate-700 hover:underline text-transform: capitalize'>
-              job posts
+              Add Job
+            </li>
+          </Link>
+          <Link to='/companies'>
+            <li className='hidden sm:inline text-slate-700 hover:underline text-transform: capitalize'>
+              Companies
             </li>
           </Link>
           <Link to='/add-company'>
             <li className='hidden sm:inline text-slate-700 hover:underline text-transform: capitalize'>
-              Companies
+              Add Company
             </li>
           </Link>
           <Link to='/users'>

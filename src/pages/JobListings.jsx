@@ -2,40 +2,41 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CircularProgress } from '@mui/material';
 
-// import colors from '../css/global.scss';
-// import '../css/job-listing.scss';
+import '../css/job-listing.scss';
 
-// import { useStateContext } from '../contexts/stateContextProvider.js';
-// import { selectItem, } from '../utils/utils.js';
-import JobCard from '../components/JobCard';
-// import { Filters, Pagination } from '../components';
+import { JobCard, Filters, JobDatails } from '../components';
 import axios, { BASE_URL } from '../apis/axios.js';
+import useAuth from '../hooks/useAuth.js';
+import JobsListingTable from '../components/JobsListingTable.jsx';
+import { jobsTableHeads } from '../data/table-heads-data.js';
 
 
 const JobListings = ({ editHandler }) => {
     const [pages, setPages] = useState([]);
+    const [jobs, setJobs] = useState([]);
     const [modalJob, setModalJob] = useState(null);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const { sidebarItems, setSidebarItems, hasFetched } = useStateContext();
 
-    const jobs = useSelector(state => state.jobs.jobs);
+    const { auth } = useAuth();
+    // const jobs = useSelector(state => state.jobs.jobs);
 
-    const createPagesObject = (totNumItems) => {
-        const totalPages = Math.ceil(totNumItems / rowsPerPage);
-        if (totalPages) {
-            const npages = new Array(totalPages)
-                .fill('p')
-                .map((npage, index) => ({ page: index + 1, isSelected: false, }));
-            return npages;
-        } else return [];
-    };
-    useEffect(() => {
-        const npages = createPagesObject(40);
-        if (npages?.length)
-            npages[0].isSelected = true;
-        setPages(npages);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [rowsPerPage]);
+    // const createPagesObject = (totNumItems) => {
+    //     const totalPages = Math.ceil(totNumItems / rowsPerPage);
+    //     if (totalPages) {
+    //         const npages = new Array(totalPages)
+    //             .fill('p')
+    //             .map((npage, index) => ({ page: index + 1, isSelected: false, }));
+    //         return npages;
+    //     } else return [];
+    // };
+
+    // useEffect(() => {
+    //     const npages = createPagesObject(40);
+    //     if (npages?.length)
+    //         npages[0].isSelected = true;
+    //     setPages(npages);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [rowsPerPage]);
 
     const handlePageSelection = async (pageNo, rpp) => {
         // setHasFetched(false);
@@ -61,34 +62,48 @@ const JobListings = ({ editHandler }) => {
         }
     };
 
-    const currentPage = pages?.find(page => page.isSelected) || { page: 1, isSelected: true, };
+    function closeUserPage () {
+        setModalJob(null);
+    }
+    function selectModalUser (job) {
+        setModalJob(job);
+    }
 
 
     useEffect(() => {
-        if (!sidebarItems[0].isSelected) { // when routing
-            setSidebarItems(selectItem(sidebarItems[0], sidebarItems));
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        const fetchCompanies = async () => {
+            try {
+                const { data } = await axios.get(`${BASE_URL}/api/jobs`, auth?.accessToken);
+                setJobs(data);
+            } catch (error) {
+                console.log(error);
+
+            }
+        };
+        fetchCompanies();
     }, []);
 
+    const currentPage = pages?.find(page => page.isSelected) || { page: 1, isSelected: true, };
+
     return (
-        <div className="Job-Listings">
-            {/* <Filters /> */}
+        <div className="Job-Listings flex flex-row " style={{ height: "calc(100vh - 80px)" }}>
+            <Filters />
+            {/* <div>
             {
                 jobs.map(job => (<JobCard key={job._id} data={job} editHandler={editHandler} />))
             }
-
-            {hasFetched ?
-                <h1>hello</h1>
+            </div> */}
+            {
+                modalJob ?
+                    <JobDatails job={modalJob} />
                 :
-                <CircularProgress />
+                    <JobsListingTable
+                        title={"JOBS LISTINGs"}
+                        tableHeads={jobsTableHeads}
+                        tableBody={jobs}
+                        selectModalUser={selectModalUser}
+                    />
             }
-            {/* <Pagination
-                pages={pages}
-                currentPage={currentPage?.page}
-                rowsPerPage={rowsPerPage}
-                handlePageSelection={handlePageSelection}
-            /> */}
         </div>
     );
 };

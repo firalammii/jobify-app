@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 // import '../css/users.scss';
 // import '../css/edit-customer.scss';
 // import colors from '../css/global.scss';
-import { Table, User, UsersTable } from '../components';
+import { User, UsersTable } from '../components';
 import useAxiosPrivate from "../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 import { usersTableHeads, tableHeads } from "../data/table-heads-data";
@@ -67,7 +67,7 @@ const Users = () => {
 							<span>USERS TABLE</span>
 							<span>10 of total {100}</span>
 						</div>
-						<Table
+						<UsersTable
 							title={"USERS TABLE"}
 							tableHeads={tableHeads}
 							tableBody={users}

@@ -14,6 +14,17 @@ export const tableHeads = [
     { id: 4, label: "Email", },
     { id: 5, label: "Roles", }
 ];
+export const jobsTableHeads = [
+    { id: 1, label: "No :", },
+    { id: 2, label: "Title", },
+    { id: 3, label: "Job Type", },
+    { id: 4, label: "Salary", },
+    { id: 5, label: "Experience", },
+    // { id: 6, label: "Remote Options", },
+    { id: 7, label: "Location", },
+    { id: 8, label: "Posted Date", },
+    { id: 9, label: "Status", },
+];
 
 export const customersTableHeads = [
     [

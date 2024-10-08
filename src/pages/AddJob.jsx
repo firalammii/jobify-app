@@ -120,7 +120,7 @@ function AddJob ({ tobeEditted }) {
 									onChange={handleChange}
 								>
 									{
-										jobCategories.map(jobCat => (<option key={jobCat} value={jobCat}>{jobCat}</option>))
+										jobCategories.map(jobCat => (<option key={jobCat.label} value={jobCat.value}>{jobCat.label}</option>))
 									}
 								</select>
 							</div>
@@ -161,13 +161,13 @@ function AddJob ({ tobeEditted }) {
 									onChange={handleChange}
 								>
 									{
-										jobTypes.map(type => (<option key={type} value={type}>{type}</option>))
+										jobTypes.map(type => (<option key={type.label} value={type.value}>{type.label}</option>))
 									}
 								</select>
 							</div>
 
 							<div className="label-input-con">
-								<label htmlFor="remoteOption" className="label"> Job Site</label>
+								<label htmlFor="remoteOption" className="label"> Remote Option</label>
 								<select
 									className='input'
 									id='remoteOption'
@@ -175,24 +175,10 @@ function AddJob ({ tobeEditted }) {
 									onChange={handleChange}
 								>
 									{
-										remoteOptions.map(remoteOption => (<option key={remoteOption} value={remoteOption}>{remoteOption}</option>))
+										remoteOptions.map(remoteOption => (<option key={remoteOption.label} value={remoteOption.value}>{remoteOption.label}</option>))
 									}
 								</select>
 							</div>
-
-							{/* <div className="label-input-con">
-								<label htmlFor="skills" className="label"> Required Skills</label>
-								<input
-									className='input'
-									type='text'
-									id='skills'
-									placeholder='Required Skills'
-									value={job.skills}
-									onChange={handleChange}
-									required
-									autoComplete='on'
-								/>
-							</div> */}
 
 							<div className="label-input-con">
 								<label htmlFor="posting_date" className="label"> Posting Date</label>
@@ -316,6 +302,7 @@ function AddJob ({ tobeEditted }) {
 									required
 								/>
 							</div>
+
 							<div className="label-input-con">
 								<p className="label">Job Address</p>
 

@@ -1,98 +1,74 @@
-import React, { useEffect, useState } from 'react';
-// import { useSelector } from 'react-redux';
-// import { Tooltip } from '@mui/material';
-import { AccountCircleRounded } from '@mui/icons-material';
+import * as React from 'react';
+import Paper from '@mui/material/Paper';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TablePagination from '@mui/material/TablePagination';
+import TableRow from '@mui/material/TableRow';
+import { ROLES } from '../data/roles';
 
-import '../css/table.scss';
-import { FloatingButtons } from '.';
-// import { ManageProfile, ManageUser } from '.';
+export default function UsersTable ({ title, tableHeads, tableBody, selectModalUser }) {
+	const [page, setPage] = React.useState(0);
+	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-const UsersTable = (props) => {
+	const handleChangePage = (event, newPage) => {
+		setPage(newPage);
+	};
 
-	// const [modalUser, setModalUser] = useState(null);
-	// const [mngp, setMngp] = useState("");
-
-	const { numbering, title, tableHeads, tableBody, totalContent, onClick } = props;
-	// const currUser = useSelector(state => state.users.currUser);
-
-	// useEffect(() => {
-	// 	if (modalUser) {
-	// 		if (modalUser._id === currUser._id) setMngp("mngpp");
-	// 		else setMngp("mngup");
-	// 	} else setMngp("");
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [modalUser]);
-
-	// function openManageProfile () {
-	// 	document.getElementById("manage-profile")?.classList.remove("offscreen");
-	// }
+	const handleChangeRowsPerPage = (event) => {
+		setRowsPerPage(+event.target.value);
+		setPage(0);
+	};
 
 	return (
-		<div className="UsersTable-comp">
-			<div className="table-con shadow">
+		<Paper sx={{ width: '100%', overflow: 'hidden', }} style={{ zIndex: -999 }}>
+			<TableContainer sx={{ maxHeight: 440 }}>
+				<Table stickyHeader aria-label="sticky table">
+					<TableHead>
+						<TableRow>
+							{tableHeads?.map((column) => (<TableCell key={column.id}> {column.label}</TableCell>))}
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						{
+							tableBody?.map((body, index) => {
+								const nroles = body?.roles?.filter(role => role !== ROLES.user);
+								return (
+									<TableRow
+										key={body?._id}
+										hover
+										role="checkbox"
+										tabIndex={-1}
+										style={{ cursor: "pointer" }}
+										onClick={() => selectModalUser(body)}
+									>
+										<TableCell>{index + 1}</TableCell>
+										<TableCell>
+											<img className='rounded-full h-7 w-7 object-cover' src={body.avatar} alt='profile' />
+										</TableCell>
+										<TableCell>{body?.firstName} {body.lastName}</TableCell>
+										<TableCell>{body?.email}</TableCell>
+										<TableCell>{nroles?.map((role, i) => (<span key={role}>{(nroles.length === 0 ? "-----" : i + 1 < nroles.length) ? role + ", " : role}</span>))}</TableCell>
+									</TableRow>
+								);
+							}
+							)
 
-				<div className="title">
-					<span>{title}</span>
-					<span style={{ justifySelf: "flex-end", textTransform: "capitalize" }}>{`total: ${totalContent} `}</span>
-				</div>
-
-				<div className="table" >
-
-					<div className='thead' style={{ gridTemplateColumns: `repeat(${tableHeads.length}, auto)`, }}>
-						{tableHeads?.map(thead =>
-						(<div div style={thead.styles} className='cell' title={thead.label} key={thead.id} >
-							{thead.label}
-						</div>)
-						)}
-					</div>
-
-					<div className='tbody'>
-						{tableBody?.map((body, index) => (
-							<div
-								key={`${body._id}-${index}`}
-								className='row'
-								style={{ gridTemplateColumns: `repeat(${tableHeads.length}, auto)` }}
-								onClick={() => onClick(body)}
-							>
-								{/* <div>
-									<FloatingButtons />
-								</div> */}
-								<span className='cell' style={{ ...tableHeads[0].styles, justifyContent: "flex-start" }}>
-									{numbering + index}
-									1
-								</span>
-								<span className='cell' style={{ ...tableHeads[1].styles }}>
-									{
-										body?.avatar ?
-											<img
-												className='rounded-full h-7 w-7 object-cover'
-												src={body.avatar}
-												alt='profile'
-											/>
-											: <AccountCircleRounded fontSize='medium' color='primary' />
-									}
-								</span>
-
-								<span className='cell' style={{ ...tableHeads[2].styles }}>
-									{`${body?.firstName} ${body?.lastName}`}
-								</span>
-
-								<span className='cell' style={{ ...tableHeads[3].styles, }}>
-									{body?.email}
-								</span>
-
-								<span className='cell' style={{ ...tableHeads[4].styles }}>
-
-									{body?.roles?.map((role, i) => <span key={role}>{(i + 1 < body.roles.length) ? role + ", " : role}</span>)}
-								</span>
-
-							</div>))}
-					</div>
-				</div>
-			</div>
-		</div>
+						}
+					</TableBody>
+				</Table>
+			</TableContainer>
+			<TablePagination
+				rowsPerPageOptions={[10, 25, 100]}
+				component="div"
+				count={tableBody.length}
+				rowsPerPage={rowsPerPage}
+				page={page}
+				onPageChange={handleChangePage}
+				onRowsPerPageChange={handleChangeRowsPerPage}
+			/>
+		</Paper>
 	);
-};
-
-
-export default UsersTable;
+}

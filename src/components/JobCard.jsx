@@ -7,14 +7,17 @@ function JobCard ({ data, editHandler, companyOnly }) {
 	const deleteHandler = () => {
 
 	};
-
-	// console.log(data);
-
 	return (
-		<div className='Job-Card'>
+		<div className='Job-Card w-full'>
 			<div className='company'>
 				<div className='profile'>
-					<span className='logo'><img src={`${BASE_URL}/${data.companyLogo}`} alt='logo' /></span>
+					<span className='logo'>
+						<img
+							src={data?.avatar}
+							alt='profile'
+							className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
+						/>
+					</span>
 					<span>
 						<h2>{data?.companyName}</h2>
 						<p>{data.website}</p>
