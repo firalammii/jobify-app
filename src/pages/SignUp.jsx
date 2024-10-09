@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { VisibilityOffRounded, VisibilityRounded } from "@mui/icons-material";
+
 import OAuth from '../components/OAuth';
 
 export default function SignUp() {
   const [formData, setFormData] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -17,7 +20,11 @@ export default function SignUp() {
     e.preventDefault();
     try {
       setLoading(true);
-      const res = await fetch('/api/auth/signup', {
+      formData.roles = [];
+
+      console.log(formData);
+
+      const res = await fetch('/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,7 +32,9 @@ export default function SignUp() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
+
       console.log(data);
+
       if (data.success === false) {
         setLoading(false);
         setError(data.message);
@@ -33,43 +42,71 @@ export default function SignUp() {
       }
       setLoading(false);
       setError(null);
-      navigate('/sign-in');
+      navigate('/signin');
     } catch (error) {
       setLoading(false);
       setError(error.message);
     }
   };
+
+  const togglePwdShow = (id) => {
+    const el = document.getElementById(id);
+    el.type = el.type === "text" ? "password" : "text";
+    setShowPassword(prev => !prev);
+
+  };
+
+  const Eye = ({ showState, elemId }) => {
+    return (
+      <div className="justify-self-end mr-3 grid place-items-center absolute top-4 right-3 rounded-full hover:cursor-pointer" onClick={() => togglePwdShow(elemId)} >
+        {showState ?
+          <VisibilityOffRounded fontSize="small" color='primary' />
+          : <VisibilityRounded fontSize="small" color='primary' />
+        }
+      </div>
+    );
+  };
   return (
     <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl text-center font-semibold my-7'>Sign Up</h1>
+      <h1 className='text-3xl text-center font-semibold my-7'>Add User</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
           type='text'
-          placeholder='username'
+          placeholder='First Name'
           className='border p-3 rounded-lg'
-          id='username'
+          id='firstName'
+          onChange={handleChange}
+        />
+        <input
+          type='text'
+          placeholder='Last Name'
+          className='border p-3 rounded-lg'
+          id='lastName'
           onChange={handleChange}
         />
         <input
           type='email'
-          placeholder='email'
+          placeholder='Email'
           className='border p-3 rounded-lg'
           id='email'
           onChange={handleChange}
         />
-        <input
-          type='password'
-          placeholder='password'
-          className='border p-3 rounded-lg'
-          id='password'
-          onChange={handleChange}
-        />
+        <div className='w-full relative'>
+          <Eye showState={showPassword} elemId={"password"} />
+          <input
+            type='password'
+            placeholder='Password'
+            className='border p-3 rounded-lg w-full'
+            id='password'
+            onChange={handleChange}
+          />
+        </div>
 
         <button
           disabled={loading}
           className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80'
         >
-          {loading ? 'Loading...' : 'Sign Up'}
+          {loading ? 'Loading...' : 'Add User'}
         </button>
         <OAuth/>
       </form>

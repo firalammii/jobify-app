@@ -8,6 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { ROLES } from '../data/roles';
+import Pagination from './Pagination';
 
 const JobsListingTable = ({ title, tableHeads, tableBody, selectModalUser }) => {
 	const [page, setPage] = React.useState(0);
@@ -67,7 +68,7 @@ const JobsListingTable = ({ title, tableHeads, tableBody, selectModalUser }) => 
 			</Paper>
 
 			{/* <div className='mt-auto absolute bottom-0 right-0 h-24 bg-white' > */}
-			<TablePagination
+			{/* <TablePagination
 				style={{ width: "76%", position: "absolute", bottom: 0, right: 0, background: "white", borderRadius: "0 0 1rem 0 " }}
 				rowsPerPageOptions={[4, 8, 15]}
 				// rowsPerPageOptions={[10, 25, 100]}
@@ -77,8 +78,9 @@ const JobsListingTable = ({ title, tableHeads, tableBody, selectModalUser }) => 
 				page={page}
 				onPageChange={handleChangePage}
 				onRowsPerPageChange={handleChangeRowsPerPage}
-			/>
+			/> */}
 			{/* </div> */}
+			<Pagination />
 		</div>
 	);
 };

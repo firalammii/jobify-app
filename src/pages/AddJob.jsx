@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import '../css/forms.scss';
 import { Alert } from '../components';
 import axios, { BASE_URL } from '../apis/axios';
-import { countries, currencies, jobCategories, jobTypes, remoteOptions } from '../data/form1-data';
+import { countries, currencies, jobCategories, jobTypes, remoteOptions } from '../data/formData';
 // import { createCompany } from '../redux/dispatchers/companies-dispatcher';
 import useAuth from '../hooks/useAuth';
 
@@ -21,7 +21,7 @@ const initial = {
 	applyURL: "",
 	experience: { minYears: "", maxYears: "" },
 	skills: [],
-	posting_date: "",
+	postingDate: "",
 	applicationDeadline: "",
 	description: "",
 };
@@ -112,10 +112,10 @@ function AddJob ({ tobeEditted }) {
 					<form className="form" onSubmit={handleSubmit} >
 						<div className="inputs-con">
 							<div className="label-input-con">
-								<label htmlFor="category" className="label"> Job Category</label>
+								<label htmlFor="jobCategory" className="label"> Job Category</label>
 								<select
 									className='input'
-									id='category'
+									id='jobCategory'
 									value={state.jobCategory}
 									onChange={handleChange}
 								>
@@ -126,11 +126,11 @@ function AddJob ({ tobeEditted }) {
 							</div>
 
 							<div className="label-input-con">
-								<label htmlFor="company_name" className="label"> Company Name</label>
+								<label htmlFor="companyName" className="label"> Company Name</label>
 								<select
 									className='input'
-									id='company'
-									value={tobeEditted ? state.companyName : state.company}
+									id='companyName'
+									value={state.companyName}
 									onChange={handleChange}
 								>
 									{
@@ -185,9 +185,9 @@ function AddJob ({ tobeEditted }) {
 								<input
 									className='input'
 									type='date'
-									id='posting_date'
+									id='postingDate'
 									placeholder='Posting Date'
-									value={state.posting_date}
+									value={state.postingDate}
 									onChange={handleChange}
 									required
 									autoComplete='on'
@@ -226,38 +226,56 @@ function AddJob ({ tobeEditted }) {
 
 							<div className="label-input-con">
 								<p className="label">Experience Range in Years</p>
-								<label htmlFor="minYears" className="label">Min Years</label>
-								<input
-									className='input small--input'
-									type='number'
-									id='minYears'
-									parentid="experience"
-									placeholder='Min Years'
-									value={state.experience.minYears}
-									onChange={handleObjectChange}
-									required
-								/>
-								<label htmlFor="maxYears" className="label">Max Years</label>
-								<input
-									className='input small--input'
-									type='number'
-									id='maxYears'
-									parentid="experience"
-									placeholder='Max Years'
-									value={state.experience.maxYears}
-									onChange={handleObjectChange}
-									required
-								/>
+								<div className='flex gap-5'>
+									<div>
+										<label htmlFor="minYears" className="label">Min Years</label>
+										<input
+											className='input small--input'
+											type='number'
+											id='minYears'
+											parentid="experience"
+											placeholder='Min Years'
+											value={state.experience.minYears}
+											onChange={handleObjectChange}
+											required
+										/>
+									</div>
+									<div >
+										<label htmlFor="maxYears" className="label">Max Years</label>
+										<input
+											className='input small--input'
+											type='number'
+											id='maxYears'
+											parentid="experience"
+											placeholder='Max Years'
+											value={state.experience.maxYears}
+											onChange={handleObjectChange}
+											required
+										/>
+									</div>
+								</div>
 							</div>
 
-							<div className="label-input-con ">
+							{/* <div className="label-input-con ">
 								<label htmlFor="skills" className="label"> Preferred Skills</label>
 								<textarea
 									className='input textarea'
 									type='text'
 									id='skills'
 									cols={50}
-									rows={10}
+									rows={4}
+									value={state.skills}
+									onChange={handleChange}
+									required
+									autoComplete='on'
+								/>
+							</div> */}
+							<div className="label-input-con">
+								<label htmlFor="skills" className="label"> Preferred Skills </label>
+								<input
+									className='input'
+									type='text'
+									id='skills'
 									placeholder='eg. Communication, Motivation'
 									value={state.skills}
 									onChange={handleChange}
@@ -268,88 +286,106 @@ function AddJob ({ tobeEditted }) {
 
 							<div className="label-input-con">
 								<p className="label">Salary Range Annually</p>
-								<label htmlFor="currency" className="label">Currency</label>
-								<select
-									className='input'
-									id='currency'
-									value={state.salary.currency}
-									parentid="salary"
-									onChange={handleObjectChange}
-								>
-									{currencies.map(currency => (<option key={currency} value={currency}>{currency}</option>))}
-								</select>
+								<div className='flex gap-5'>
+									<div>
+										<label htmlFor="currency" className="label">Currency</label>
+										<select
+											className='input'
+											id='currency'
+											value={state.salary.currency}
+											parentid="salary"
+											onChange={handleObjectChange}
+										>
+											{currencies.map(currency => (<option key={currency} value={currency}>{currency}</option>))}
+										</select>
+									</div>
 
-								<label htmlFor="minSalary" className="label">Min Salary</label>
-								<input
-									className='input small--input'
-									type='number'
-									id='minSalary'
-									placeholder='Min Salary'
-									value={state.salary.minSalary}
-									parentid="salary"
-									onChange={handleObjectChange}
-									required
-								/>
-								<label htmlFor="maxSalary" className="label">Max Salary</label>
-								<input
-									className='input small--input'
-									type='number'
-									id='maxSalary'
-									placeholder='Max Salary'
-									value={state.salary.maxSalary}
-									parentid="salary"
-									onChange={handleObjectChange}
-									required
-								/>
+									<div>
+										<label htmlFor="minSalary" className="label">Min Salary</label>
+										<input
+											className='input small--input'
+											type='number'
+											id='minSalary'
+											placeholder='Min Salary'
+											value={state.salary.minSalary}
+											parentid="salary"
+											onChange={handleObjectChange}
+											required
+										/>
+									</div>
+									<div>
+										<label htmlFor="maxSalary" className="label">Max Salary</label>
+										<input
+											className='input small--input'
+											type='number'
+											id='maxSalary'
+											placeholder='Max Salary'
+											value={state.salary.maxSalary}
+											parentid="salary"
+											onChange={handleObjectChange}
+											required
+										/>
+									</div>
+								</div>
 							</div>
 
 							<div className="label-input-con">
 								<p className="label">Job Address</p>
 
-								<label htmlFor="city" className="label">City</label>
-								<input
-									className='input small--input'
-									type='text'
-									id='city'
-									placeholder='City'
-									value={state.location.city}
-									parentid="location"
-									onChange={handleObjectChange}
-									required
-								/>
-								<label htmlFor="state" className="label">State</label>
-								<input
-									className='input small--input'
-									type='text'
-									id='state'
-									placeholder='Min Salary'
-									value={state.location.state}
-									parentid="location"
-									onChange={handleObjectChange}
-								/>
-								<label htmlFor="country" className="label">Country</label>
-								<select
-									className='input'
-									id='country'
-									value={state.location.country}
-									parentid="location"
-									onChange={handleObjectChange}
-									required
-								>
-									<option value={"	"}>Ethiopia</option>
-									{/* {countries.map(country => (<option key={country} value={country}>{country}</option>))} */}
-								</select>
+								<div className='flex gap-5'>
+									<div>
+										<label htmlFor="city" className="label">City</label>
+										<input
+											className='input small--input'
+											type='text'
+											id='city'
+											placeholder='City'
+											value={state.location.city}
+											parentid="location"
+											onChange={handleObjectChange}
+											required
+										/>
+									</div>
+									<div>
+										<label htmlFor="state" className="label">State</label>
+										<input
+											className='input small--input'
+											type='text'
+											id='state'
+											placeholder='Min Salary'
+											value={state.location.state}
+											parentid="location"
+											onChange={handleObjectChange}
+										/>
+									</div>
+									<div>
+										<label htmlFor="country" className="label">Country</label>
+										<select
+											className='input'
+											id='country'
+											value={state.location.country}
+											parentid="location"
+											onChange={handleObjectChange}
+											required
+										>
+											<option value={"	"}>Ethiopia</option>
+											{/* {countries.map(country => (<option key={country} value={country}>{country}</option>))} */}
+										</select>
+									</div>
 
-								<label htmlFor="zipCode" className="label">Zip Code</label>
-								<input
-									className='input small--input'
-									type='text'
-									id='zipCode'
-									placeholder='Zip Code'
-									value={state.location.zipCode}
-									parentid="location"
-									onChange={handleObjectChange}
-								/>
+									<div>
+										<label htmlFor="zipCode" className="label">Zip Code</label>
+										<input
+											className='input small--input'
+											type='text'
+											id='zipCode'
+											placeholder='Zip Code'
+											value={state.location.zipCode}
+											parentid="location"
+											onChange={handleObjectChange}
+										/>
+									</div>
+								</div>
 
 							</div>
 
@@ -369,7 +405,7 @@ function AddJob ({ tobeEditted }) {
 								/>
 							</div> */}
 
-							<div className="label-input-con">
+							<div className="label-input-con ">
 								<input
 									className='input form-btn'
 									type='submit'

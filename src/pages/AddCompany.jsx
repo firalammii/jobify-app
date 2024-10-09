@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { createCompany } from '../redux/dispatchers/companies-dispatcher';
 import useAuth from '../hooks/useAuth';
 // import { CREATE_COMPANY } from '../redux/actions/company-actions';
-import { companyTypes, countries, } from '../data/form1-data';
+import { companyTypes, countries, } from '../data/formData';
 const initial = {
 	companyType: "",
 	companyName: "",
@@ -58,9 +58,9 @@ function AddCompany ({ tobeEditted }) {
 	};
 
 	const handleSubmit = async (e) => {
-		const { category, company_name, logo, location, website, email, tel_Number, description, } = state;
+		const { category, companyLogo, companyName, location, website, telNumber, description, } = state;
 		e.preventDefault();
-		const validInputs = category && company_name && logo && location && website && email && tel_Number && description;
+		const validInputs = category && companyName && companyLogo && location && website && telNumber && description;
 		if (!validInputs) {
 			setAlertMsg("ooops There Empty Field in Form, All fields are Required !!");
 			return;
@@ -68,12 +68,11 @@ function AddCompany ({ tobeEditted }) {
 		setAlertMsg("");
 		const formData = new FormData();
 		formData.append("category", category);
-		formData.append("company_name", company_name);
-		formData.append("logo", logo);
+		formData.append("companyName", companyName);
+		formData.append("companyLogo", companyLogo);
 		formData.append("location", location);
 		formData.append("website", website);
-		formData.append("email", email);
-		formData.append("tel_Number", tel_Number);
+		formData.append("telNumber", telNumber);
 		formData.append("description", description);
 
 		try {
@@ -107,9 +106,8 @@ function AddCompany ({ tobeEditted }) {
 				alertMsg ?
 					<Alert returnFunction={() => setAlertMsg("")} message={alertMsg} success={success} />
 					:
-					<form className="form" onSubmit={handleSubmit} >
+					<form className="form p-5" onSubmit={handleSubmit} >
 						<div className="inputs-con">
-
 							<div className="label-input-con">
 								<label htmlFor="stateType" className="label"> Company Type</label>
 								<select
@@ -199,82 +197,95 @@ function AddCompany ({ tobeEditted }) {
 							</div>
 
 							<div className="label-input-con">
-								<p className="label">Company Address</p>
+								<p className="label">Job Address</p>
+								<div className='flex gap-5'>
+									<div>
+										<label htmlFor="city" className="label">City</label>
+										<input
+											className='input small--input'
+											type='text'
+											id='city'
+											placeholder='City'
+											value={state.location.city}
+											parentid="location"
+											onChange={handleObjectChange}
+											required
+										/>
+									</div>
+									<div>
+										<label htmlFor="state" className="label">State</label>
+										<input
+											className='input small--input'
+											type='text'
+											id='state'
+											placeholder='Min Salary'
+											value={state.location.state}
+											parentid="location"
+											onChange={handleObjectChange}
+										/>
+									</div>
+									<div>
+										<label htmlFor="country" className="label">Country</label>
+										<select
+											className='input'
+											id='country'
+											value={state.location.country}
+											parentid="location"
+											onChange={handleObjectChange}
+											required
+										>
+											<option value={"	"}>Ethiopia</option>
+											{/* {countries.map(country => (<option key={country} value={country}>{country}</option>))} */}
+										</select>
+									</div>
 
-								<label htmlFor="city" className="label">City</label>
-								<input
-									className='input small--input'
-									type='text'
-									id='city'
-									placeholder='City'
-									value={state.location?.city}
-									parentid="location"
-									onChange={handleObjectChange}
-									required
-								/>
-								<label htmlFor="state" className="label">State</label>
-								<input
-									className='input small--input'
-									type='text'
-									id='state'
-									placeholder='City'
-									value={state.location?.state}
-									parentid="location"
-									onChange={handleObjectChange}
-									required
-								/>
-								<label htmlFor="country" className="label">Country</label>
-								<select
-									className='input'
-									id='country'
-									parentid="location"
-									value={state.location?.country}
-									onChange={handleObjectChange}
-									required
-								>
-									{countries.map(country => (<option key={country} value={country}>{country}</option>))}
-								</select>
-
-								<label htmlFor="zipCode" className="label">Zip Code</label>
-								<input
-									className='input small--input'
-									type='text'
-									id='zipCode'
-									placeholder='Zip Code'
-									parentid="location"
-									value={state.location.zipCode}
-									onChange={handleObjectChange}
-								/>
+									<div>
+										<label htmlFor="zipCode" className="label">Zip Code</label>
+										<input
+											className='input small--input'
+											type='text'
+											id='zipCode'
+											placeholder='Zip Code'
+											value={state.location.zipCode}
+											parentid="location"
+											onChange={handleObjectChange}
+										/>
+									</div>
+								</div>
 							</div>
 
 							<div className="label-input-con">
 								<p className="label">Telephone Number</p>
-
-								<label htmlFor="mobile" className="mobile">Mobile</label>
-								<input
-									className='input small--input'
-									type='tel'
-									id='mobile'
-									placeholder='phone number'
-									parentid="telNumber"
-									pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-									value={state.telNumber?.mobile}
-									onChange={handleObjectChange}
-									required
-									autoCorrect='on'
-								/>
-								<label htmlFor="line" className="label">Line</label>
-								<input
-									className='input small--input'
-									type='tel'
-									id='line'
-									pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-									placeholder='phone number'
-									parentid="telNumber"
-									value={state.telNumber?.line}
-									onChange={handleObjectChange}
-								/>
-
+								<div className='flex gap-5'>
+									<div>
+										<label htmlFor="mobile" className="mobile">Mobile</label>
+										<input
+											className='input small--input'
+											type='tel'
+											id='mobile'
+											placeholder='phone number'
+											parentid="telNumber"
+											pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+											value={state.telNumber?.mobile}
+											onChange={handleObjectChange}
+											required
+											autoCorrect='on'
+										/>
+									</div>
+									<div>
+										<label htmlFor="line" className="label">Line</label>
+										<input
+											className='input small--input'
+											type='tel'
+											id='line'
+											pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+											placeholder='phone number'
+											parentid="telNumber"
+											value={state.telNumber?.line}
+											onChange={handleObjectChange}
+										/>
+									</div>
+								</div>
 							</div>
 
 							<div className="label-input-con">
@@ -285,11 +296,7 @@ function AddCompany ({ tobeEditted }) {
 								/>
 							</div>
 						</div>
-
-
-
 					</form>
-
 			}
 		</div>
 	);

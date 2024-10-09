@@ -12,6 +12,7 @@ export const jobCategories = [{ label: "None ", value: "" },
 { label: "Plant and Machine Operators", value: "Plant and Machine Operators" },
 { label: "Elementary Occupations", value: "Elementary Occupations" },
 ];
+
 export const jobTypes = [
 	{ label: "None ", value: "" },
 	{ label: "Full-time ", value: "Full-time" },
@@ -21,18 +22,21 @@ export const jobTypes = [
 	{ label: "Internship ", value: "Internship" },
 	{ label: "Freelance ", value: "Freelance" },
 ];
+
 export const remoteOptions = [
 	{ label: "None ", value: "" },
 	{ label: "On-site ", value: "On-site " },
 	{ label: "Remote ", value: "Remote" },
 	{ label: "Hybrid ", value: "Hybrid" },
 ];
+
 export const currencies = ["USD", "CAD", "EUR", "GBP", "GIP", "AUD", "OMR", "BHD", "KWD", "INR", "ETB"];
 
 // ****************** company *******************
 export const countries = ['Public', 'Private', 'Government', 'Non-Profit'];
 export const companyTypes = ['Public', 'Private', 'Government', 'Non-Profit'];
 
+export const avatar = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
 
 // "Technicians", "> Service Workers;", "> Office and Clerical Workers", "> Sales Workers ";
 // "> Craft Workers(Skilled)  ", "Laborers Unskilled", " > Operatives(Semi - Skilled)";

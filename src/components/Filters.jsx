@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { jobCategories, remoteOptions } from '../data/form1-data';
+import { jobCategories, remoteOptions } from '../data/formData';
 import '../css/forms.scss';
 
 const initial = {
@@ -25,7 +25,7 @@ function Filters () {
 	};
 
 	return (
-		<div className='w-1/4 h-full bg-transparent shadow-md rounded-es-2xl p-6' >
+		<div className='w-1/3 h-full bg-transparent shadow-md rounded-es-2xl p-6 overflow-auto' >
 			<h2 className='font-bold'>Filter Criterions</h2>
 			<form className='inputs-con w-full grid gap-2' >
 				<div className="label-input-con grid gap-2">

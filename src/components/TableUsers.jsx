@@ -8,12 +8,14 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { ROLES } from '../data/roles';
+import Pagination from './Pagination';
 
 export default function UsersTable ({ title, tableHeads, tableBody, selectModalUser }) {
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
 	const handleChangePage = (event, newPage) => {
+		console.log(newPage)
 		setPage(newPage);
 	};
 
@@ -23,6 +25,7 @@ export default function UsersTable ({ title, tableHeads, tableBody, selectModalU
 	};
 
 	return (
+		<>
 		<Paper sx={{ width: '100%', overflow: 'hidden', }} style={{ zIndex: -999 }}>
 			<TableContainer sx={{ maxHeight: 440 }}>
 				<Table stickyHeader aria-label="sticky table">
@@ -70,5 +73,7 @@ export default function UsersTable ({ title, tableHeads, tableBody, selectModalU
 				onRowsPerPageChange={handleChangeRowsPerPage}
 			/>
 		</Paper>
+			<Pagination pages={page} />
+		</>
 	);
 }

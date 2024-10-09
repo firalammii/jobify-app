@@ -8,14 +8,11 @@ export { default as Home } from './Home';
 
 export { default as Jobs } from './JobListings';
 
-export { default as Listing } from './Listing';
-
 export { default as Missing } from './Missing';
 
 export { default as SignUp } from './SignUp';
 export { default as SignIn } from './SignIn';
 export { default as Profile } from './Profile';
-export { default as Search } from './Search';
 export { default as UpdateListing } from './UpdateListing';
 
 export { default as Unauthorized } from './Unauthorized';

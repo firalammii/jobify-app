@@ -15,6 +15,7 @@ const Button = (props) => {
 
     return (
         <button
+            className='hover:scale-105'
             type={type || "button"}
             style={button}
             onClick={onClickFunction}

@@ -88,10 +88,6 @@ const Companies = ({ editHandler }) => {
                 companies.map(company => (<JobCard key={company._id} data={company} editHandler={editHandler} companyOnly={true} />))
             }
 
-
-            <CircularProgress />
-
-
         </div>
     );
 };

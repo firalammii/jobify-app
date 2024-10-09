@@ -7,8 +7,9 @@ import '../css/job-listing.scss';
 import { JobCard, Filters, JobDatails } from '../components';
 import axios, { BASE_URL } from '../apis/axios.js';
 import useAuth from '../hooks/useAuth.js';
-import JobsListingTable from '../components/JobsListingTable.jsx';
+import JobsListingTable from '../components/TableJobs.jsx';
 import { jobsTableHeads } from '../data/table-heads-data.js';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 
 const JobListings = ({ editHandler }) => {
@@ -61,11 +62,12 @@ const JobListings = ({ editHandler }) => {
             return;
         }
     };
-
+    const navigate = useNavigate();
     function closeUserPage () {
         setModalJob(null);
     }
     function selectModalUser (job) {
+        navigate('/job-details')
         setModalJob(job);
     }
 
@@ -93,9 +95,11 @@ const JobListings = ({ editHandler }) => {
                 jobs.map(job => (<JobCard key={job._id} data={job} editHandler={editHandler} />))
             }
             </div> */}
+            <div className='w-2/3'>
+
             {
                 modalJob ?
-                    <JobDatails job={modalJob} />
+                        <JobDatails job={modalJob} returnFunction={() => setModalJob(null)} />
                 :
                     <JobsListingTable
                         title={"JOBS LISTINGs"}
@@ -104,6 +108,7 @@ const JobListings = ({ editHandler }) => {
                         selectModalUser={selectModalUser}
                     />
             }
+            </div>
         </div>
     );
 };

@@ -12,19 +12,23 @@ export default function OAuth() {
       const provider = new GoogleAuthProvider();
       const auth = getAuth(app);
 
-      const result = await signInWithPopup(auth, provider);
+      const goglRes = await signInWithPopup(auth, provider);
+      console.log(goglRes);
 
+      const fullName = goglRes.user.displayName.split(" ");
       const res = await fetch('/api/auth/google', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          name: result.user.displayName,
-          email: result.user.email,
-          photo: result.user.photoURL,
+          firstName: fullName[0],
+          lastName: fullName[1],
+          email: goglRes.user.email,
+          avatar: goglRes.user.photoURL,
         }),
       });
+      // console.log(data)
       const data = await res.json();
       dispatch(signInSuccess(data));
       navigate('/');
